@@ -6,11 +6,7 @@
     <title>HUBXI ULTRA — Генератор ключей</title>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
@@ -61,14 +57,8 @@
             align-items: center;
             gap: 10px;
         }
-        .step-status {
-            font-size: 20px;
-        }
-        .step-description {
-            color: #aaa;
-            font-size: 13px;
-            margin-bottom: 10px;
-        }
+        .step-status { font-size: 20px; }
+        .step-description { color: #aaa; font-size: 13px; margin-bottom: 10px; }
         button, .button {
             background: #ff6b6b;
             color: white;
@@ -115,22 +105,14 @@
             display: none;
             font-size: 14px;
         }
-        .g-recaptcha {
-            margin: 15px 0;
-            display: flex;
-            justify-content: center;
-        }
-        hr {
-            border-color: rgba(255,255,255,0.1);
-            margin: 20px 0;
-        }
-        .footer {
-            text-align: center;
-            color: #666;
-            font-size: 11px;
-            margin-top: 20px;
-        }
+        .g-recaptcha { margin: 15px 0; display: flex; justify-content: center; }
+        hr { border-color: rgba(255,255,255,0.1); margin: 20px 0; }
+        .footer { text-align: center; color: #666; font-size: 11px; margin-top: 20px; }
     </style>
+    <script>
+        // ЗДЕСЬ ТВОЙ АДРЕС WORKER (обязательно!)
+        const WORKER_API_URL = "https://hubxi-api.vgd61472.workers.dev";
+    </script>
 </head>
 <body>
 <div class="container">
@@ -139,9 +121,7 @@
 
     <!-- Шаг 1: Подписка на Roblox -->
     <div class="step" id="step1">
-        <div class="step-title">
-            <span class="step-status">🎮</span> 1. Подпишись на Roblox
-        </div>
+        <div class="step-title"><span class="step-status">🎮</span> 1. Подпишись на Roblox</div>
         <div class="step-description">Подпишись на наш профиль в Roblox</div>
         <a href="https://www.roblox.com/users/6096797545/profile?friendshipSourceType=PlayerSearch" target="_blank" class="button" id="robloxBtn">Подписаться на Roblox</a>
         <div class="timer" id="robloxTimer" style="display:none;">⏳ Проверка...</div>
@@ -149,9 +129,7 @@
 
     <!-- Шаг 2: Присоединиться к Discord -->
     <div class="step" id="step2">
-        <div class="step-title">
-            <span class="step-status">💬</span> 2. Присоединись к Discord
-        </div>
+        <div class="step-title"><span class="step-status">💬</span> 2. Присоединись к Discord</div>
         <div class="step-description">Зайди на наш сервер Discord</div>
         <a href="https://discord.gg/YJW3jH9WJ" target="_blank" class="button" id="discordBtn">Присоединиться к Discord</a>
         <div class="timer" id="discordTimer" style="display:none;">⏳ Проверка...</div>
@@ -159,27 +137,21 @@
 
     <!-- Шаг 3: Посетить сайт -->
     <div class="step" id="step3">
-        <div class="step-title">
-            <span class="step-status">🌐</span> 3. Посети наш сайт
-        </div>
+        <div class="step-title"><span class="step-status">🌐</span> 3. Посети наш сайт</div>
         <div class="step-description">Перейди на официальный сайт</div>
         <a href="https://v-message-ultra.pages.dev/" target="_blank" class="button" id="siteBtn">Перейти на сайт</a>
         <div class="timer" id="siteTimer" style="display:none;">⏳ Проверка...</div>
     </div>
 
-    <!-- Шаг 4: Капча (без лишней кнопки) -->
+    <!-- Шаг 4: Капча -->
     <div class="step" id="step4">
-        <div class="step-title">
-            <span class="step-status">🤖</span> 4. Подтверди, что ты не робот
-        </div>
+        <div class="step-title"><span class="step-status">🤖</span> 4. Подтверди, что ты не робот</div>
         <div class="step-description">Пройди проверку</div>
         <div class="g-recaptcha" data-sitekey="6LfLqfosAAAAAFJSKqdg7qsP7bShaL4V12g2y4rd" data-callback="onCaptchaSuccess"></div>
     </div>
 
     <hr>
-
     <button id="generateBtn" disabled>🔒 Выполни все шаги</button>
-
     <div class="key-display" id="keyDisplay"></div>
     <div class="error" id="errorMsg"></div>
     <div class="footer">Ключ действителен 1 день • HUBXI ULTRA</div>
@@ -187,7 +159,7 @@
 
 <script>
     let steps = { roblox: false, discord: false, site: false, captcha: false };
-    
+
     function checkRoblox() {
         const btn = document.getElementById('robloxBtn');
         const timerDiv = document.getElementById('robloxTimer');
@@ -202,7 +174,7 @@
             checkAllSteps();
         }, { once: true });
     }
-    
+
     function checkDiscord() {
         const btn = document.getElementById('discordBtn');
         const timerDiv = document.getElementById('discordTimer');
@@ -217,7 +189,7 @@
             checkAllSteps();
         }, { once: true });
     }
-    
+
     function checkSite() {
         const btn = document.getElementById('siteBtn');
         const timerDiv = document.getElementById('siteTimer');
@@ -232,13 +204,12 @@
             checkAllSteps();
         }, { once: true });
     }
-    
-    // Функция вызывается автоматически после прохождения капчи
+
     function onCaptchaSuccess() {
         steps.captcha = true;
         checkAllSteps();
     }
-    
+
     function checkAllSteps() {
         const allCompleted = steps.roblox && steps.discord && steps.site && steps.captcha;
         const generateBtn = document.getElementById('generateBtn');
@@ -252,7 +223,7 @@
         document.getElementById('step3').classList.toggle('completed', steps.site);
         document.getElementById('step4').classList.toggle('completed', steps.captcha);
     }
-    
+
     function generateKey() {
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         let key = 'HUBXI-';
@@ -260,28 +231,46 @@
             for (let j = 0; j < 4; j++) key += chars.charAt(Math.floor(Math.random() * chars.length));
             if (i < 3) key += '-';
         }
-        const expiry = new Date();
-        expiry.setDate(expiry.getDate() + 1);
-        let keys = JSON.parse(localStorage.getItem('hubxi_keys') || '[]');
-        keys.push({ key: key, expires: expiry.toISOString() });
-        localStorage.setItem('hubxi_keys', JSON.stringify(keys));
         return key;
     }
-    
-    document.getElementById('generateBtn').addEventListener('click', () => {
+
+    async function sendKeyToAPI(key) {
+        try {
+            const response = await fetch(`${WORKER_API_URL}/create`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ key: key })
+            });
+            if (!response.ok) throw new Error('API error');
+            const result = await response.json();
+            return result.success === true;
+        } catch (error) {
+            console.error('Ошибка при отправке ключа:', error);
+            return false;
+        }
+    }
+
+    document.getElementById('generateBtn').addEventListener('click', async () => {
         if (!steps.roblox || !steps.discord || !steps.site || !steps.captcha) {
             document.getElementById('errorMsg').textContent = '❌ Выполни все шаги!';
             document.getElementById('errorMsg').style.display = 'block';
             return;
         }
         const newKey = generateKey();
+        const sent = await sendKeyToAPI(newKey);
+        if (!sent) {
+            document.getElementById('errorMsg').textContent = '❌ Ошибка сервера, попробуй позже!';
+            document.getElementById('errorMsg').style.display = 'block';
+            return;
+        }
         const keyDisplay = document.getElementById('keyDisplay');
         keyDisplay.textContent = newKey;
         keyDisplay.style.display = 'block';
         document.getElementById('errorMsg').style.display = 'none';
         navigator.clipboard.writeText(newKey);
     });
-    
+
+    // Инициализация обработчиков
     document.getElementById('robloxBtn').addEventListener('click', (e) => {
         e.preventDefault();
         window.open('https://www.roblox.com/users/6096797545/profile?friendshipSourceType=PlayerSearch', '_blank');
@@ -297,6 +286,7 @@
         window.open('https://v-message-ultra.pages.dev/', '_blank');
         checkSite();
     });
+    window.onCaptchaSuccess = onCaptchaSuccess;
 </script>
 </body>
 </html>
