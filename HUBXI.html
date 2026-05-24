@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HUBXI ULTRA — Генератор ключей</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        h1 {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #ccc;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .step {
+            background: rgba(0,0,0,0.5);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #ff6b6b;
+        }
+        .step.completed {
+            border-left-color: #4ecdc4;
+            opacity: 0.8;
+        }
+        .step-title {
+            color: #fff;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .step-status {
+            font-size: 20px;
+        }
+        .step-description {
+            color: #aaa;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+        button, .button {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            width: 100%;
+            transition: all 0.3s;
+            text-align: center;
+            display: inline-block;
+            text-decoration: none;
+        }
+        button:hover, .button:hover {
+            background: #ff4757;
+            transform: translateY(-2px);
+        }
+        button:disabled {
+            background: #555;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .key-display {
+            background: #2ed573;
+            color: #000;
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 18px;
+            word-break: break-all;
+            display: none;
+        }
+        .error {
+            background: #ff4757;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 15px;
+            text-align: center;
+            display: none;
+            font-size: 14px;
+        }
+        .g-recaptcha {
+            margin: 15px 0;
+            display: flex;
+            justify-content: center;
+        }
+        hr {
+            border-color: rgba(255,255,255,0.1);
+            margin: 20px 0;
+        }
+        .footer {
+            text-align: center;
+            color: #666;
+            font-size: 11px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🔑 HUBXI ULTRA</h1>
+    <div class="subtitle">Выполни все шаги, чтобы получить ключ</div>
+
+    <!-- Шаг 1: Подписка на Roblox -->
+    <div class="step" id="step1">
+        <div class="step-title">
+            <span class="step-status">🎮</span> 1. Подпишись на Roblox
+        </div>
+        <div class="step-description">Подпишись на наш профиль в Roblox</div>
+        <a href="https://www.roblox.com/users/6096797545/profile?friendshipSourceType=PlayerSearch" target="_blank" class="button" id="robloxBtn">Подписаться на Roblox</a>
+        <div class="timer" id="robloxTimer" style="display:none;">⏳ Проверка...</div>
+    </div>
+
+    <!-- Шаг 2: Присоединиться к Discord -->
+    <div class="step" id="step2">
+        <div class="step-title">
+            <span class="step-status">💬</span> 2. Присоединись к Discord
+        </div>
+        <div class="step-description">Зайди на наш сервер Discord</div>
+        <a href="https://discord.gg/YJW3jH9WJ" target="_blank" class="button" id="discordBtn">Присоединиться к Discord</a>
+        <div class="timer" id="discordTimer" style="display:none;">⏳ Проверка...</div>
+    </div>
+
+    <!-- Шаг 3: Посетить сайт -->
+    <div class="step" id="step3">
+        <div class="step-title">
+            <span class="step-status">🌐</span> 3. Посети наш сайт
+        </div>
+        <div class="step-description">Перейди на официальный сайт</div>
+        <a href="https://v-message-ultra.pages.dev/" target="_blank" class="button" id="siteBtn">Перейти на сайт</a>
+        <div class="timer" id="siteTimer" style="display:none;">⏳ Проверка...</div>
+    </div>
+
+    <!-- Шаг 4: Капча -->
+    <div class="step" id="step4">
+        <div class="step-title">
+            <span class="step-status">🤖</span> 4. Подтверди, что ты не робот
+        </div>
+        <div class="step-description">Пройди проверку</div>
+        <div class="g-recaptcha" data-sitekey="u"></div>
+        <button id="captchaBtn" disabled>✅ Подтвердить капчу</button>
+    </div>
+
+    <hr>
+
+    <button id="generateBtn" disabled>🔒 Выполни все шаги</button>
+
+    <div class="key-display" id="keyDisplay"></div>
+    <div class="error" id="errorMsg"></div>
+    <div class="footer">Ключ действителен 1 день • HUBXI ULTRA</div>
+</div>
+
+<script>
+    let steps = { roblox: false, discord: false, site: false, captcha: false };
+    
+    function checkRoblox() {
+        const btn = document.getElementById('robloxBtn');
+        const timerDiv = document.getElementById('robloxTimer');
+        btn.innerHTML = "✅ Подтвердить подписку";
+        btn.style.background = "#2ed573";
+        timerDiv.style.display = "block";
+        timerDiv.innerHTML = "👉 Нажми кнопку, когда подпишешься";
+        btn.addEventListener('click', () => {
+            steps.roblox = true;
+            timerDiv.innerHTML = "✅ Подписка подтверждена!";
+            timerDiv.style.color = "#2ed573";
+            checkAllSteps();
+        }, { once: true });
+    }
+    
+    function checkDiscord() {
+        const btn = document.getElementById('discordBtn');
+        const timerDiv = document.getElementById('discordTimer');
+        btn.innerHTML = "✅ Подтвердить вход";
+        btn.style.background = "#2ed573";
+        timerDiv.style.display = "block";
+        timerDiv.innerHTML = "👉 Нажми кнопку, когда зайдёшь на сервер";
+        btn.addEventListener('click', () => {
+            steps.discord = true;
+            timerDiv.innerHTML = "✅ Discord подтверждён!";
+            timerDiv.style.color = "#2ed573";
+            checkAllSteps();
+        }, { once: true });
+    }
+    
+    function checkSite() {
+        const btn = document.getElementById('siteBtn');
+        const timerDiv = document.getElementById('siteTimer');
+        btn.innerHTML = "✅ Подтвердить посещение";
+        btn.style.background = "#2ed573";
+        timerDiv.style.display = "block";
+        timerDiv.innerHTML = "👉 Нажми кнопку, когда откроешь сайт";
+        btn.addEventListener('click', () => {
+            steps.site = true;
+            timerDiv.innerHTML = "✅ Сайт посещён!";
+            timerDiv.style.color = "#2ed573";
+            checkAllSteps();
+        }, { once: true });
+    }
+    
+    function onCaptchaSuccess() {
+        steps.captcha = true;
+        const captchaBtn = document.getElementById('captchaBtn');
+        captchaBtn.disabled = false;
+        captchaBtn.style.background = "#2ed573";
+        captchaBtn.textContent = "✅ Капча пройдена";
+        checkAllSteps();
+    }
+    
+    function checkAllSteps() {
+        const allCompleted = steps.roblox && steps.discord && steps.site && steps.captcha;
+        const generateBtn = document.getElementById('generateBtn');
+        if (allCompleted) {
+            generateBtn.disabled = false;
+            generateBtn.textContent = "🎁 ПОЛУЧИТЬ КЛЮЧ";
+            generateBtn.style.background = "#2ed573";
+        }
+        document.getElementById('step1').classList.toggle('completed', steps.roblox);
+        document.getElementById('step2').classList.toggle('completed', steps.discord);
+        document.getElementById('step3').classList.toggle('completed', steps.site);
+        document.getElementById('step4').classList.toggle('completed', steps.captcha);
+    }
+    
+    function generateKey() {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let key = 'HUBXI-';
+        for (let i = 0; i < 4; i++) {
+            for (let j = 0; j < 4; j++) key += chars.charAt(Math.floor(Math.random() * chars.length));
+            if (i < 3) key += '-';
+        }
+        const expiry = new Date();
+        expiry.setDate(expiry.getDate() + 1);
+        let keys = JSON.parse(localStorage.getItem('hubxi_keys') || '[]');
+        keys.push({ key: key, expires: expiry.toISOString() });
+        localStorage.setItem('hubxi_keys', JSON.stringify(keys));
+        return key;
+    }
+    
+    document.getElementById('generateBtn').addEventListener('click', () => {
+        if (!steps.roblox || !steps.discord || !steps.site || !steps.captcha) {
+            document.getElementById('errorMsg').textContent = '❌ Выполни все шаги!';
+            document.getElementById('errorMsg').style.display = 'block';
+            return;
+        }
+        const newKey = generateKey();
+        const keyDisplay = document.getElementById('keyDisplay');
+        keyDisplay.textContent = newKey;
+        keyDisplay.style.display = 'block';
+        document.getElementById('errorMsg').style.display = 'none';
+        navigator.clipboard.writeText(newKey);
+    });
+    
+    document.getElementById('robloxBtn').addEventListener('click', (e) => {
+        e.preventDefault();
+        window.open('https://www.roblox.com/users/6096797545/profile?friendshipSourceType=PlayerSearch', '_blank');
+        checkRoblox();
+    });
+    document.getElementById('discordBtn').addEventListener('click', (e) => {
+        e.preventDefault();
+        window.open('https://discord.gg/YJW3jH9WJ', '_blank');
+        checkDiscord();
+    });
+    document.getElementById('siteBtn').addEventListener('click', (e) => {
+        e.preventDefault();
+        window.open('https://v-message-ultra.pages.dev/', '_blank');
+        checkSite();
+    });
+    window.onCaptchaSuccess = onCaptchaSuccess;
+</script>
+</body>
+</html>
