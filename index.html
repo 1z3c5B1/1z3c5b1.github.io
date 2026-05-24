@@ -167,14 +167,13 @@
         <div class="timer" id="siteTimer" style="display:none;">⏳ Проверка...</div>
     </div>
 
-    <!-- Шаг 4: Капча -->
+    <!-- Шаг 4: Капча (без лишней кнопки) -->
     <div class="step" id="step4">
         <div class="step-title">
             <span class="step-status">🤖</span> 4. Подтверди, что ты не робот
         </div>
         <div class="step-description">Пройди проверку</div>
-        <div class="g-recaptcha" data-sitekey="6LfLqfosAAAAAFJSKqdg7qsP7bShaL4V12g2y4rd"></div>
-        <button id="captchaBtn" disabled>✅ Подтвердить капчу</button>
+        <div class="g-recaptcha" data-sitekey="6LfLqfosAAAAAFJSKqdg7qsP7bShaL4V12g2y4rd" data-callback="onCaptchaSuccess"></div>
     </div>
 
     <hr>
@@ -234,12 +233,9 @@
         }, { once: true });
     }
     
+    // Функция вызывается автоматически после прохождения капчи
     function onCaptchaSuccess() {
         steps.captcha = true;
-        const captchaBtn = document.getElementById('captchaBtn');
-        captchaBtn.disabled = false;
-        captchaBtn.style.background = "#2ed573";
-        captchaBtn.textContent = "✅ Капча пройдена";
         checkAllSteps();
     }
     
@@ -301,7 +297,6 @@
         window.open('https://v-message-ultra.pages.dev/', '_blank');
         checkSite();
     });
-    window.onCaptchaSuccess = onCaptchaSuccess;
 </script>
 </body>
 </html>
